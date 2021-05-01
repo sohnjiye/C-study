@@ -1,34 +1,68 @@
-#include <iostream> //컴파일러는 전처리기 호출, 키보드 입력 및 화면 출력시에 필요
-#include <string> //문자열의 크기 제약이 없다
-using namespace std; //std:: 생략을 위해 선언
+#include <iostream>
+using namespace std;
 
-int main() //C++ 프로그램의 시작점
+int main()
 {
-	cout << "당신의 이름은 무엇입니까?";
-	char name[11]; //영문10, 한글5
-	cin.getline(name, 11, '\n'); //Enter입력까지 최대 10개 문자 입력 가능
-	cout << "반갑습니다." << name << "님" << endl;
+	int sel, a, b, x, y; // 좌석 선택(sel), 이용자가 선택 좌석 변수(a, b), 배열 객체(x, y)
+	int seat[3][10] = {0}; //배열 초기화
 
-	int appleprice{}, bananaprice{}, orangeprice{}; //정수(integer)의 타입으로 입력받음
-	int apple{}, banana{}, orange{}; //과일의 개수를 입력받음
-	int total{};
-	//총가격 - 500(할인)된 가격을 출력함
-	
-	cout << "apple의 가격은 얼마입니까?";
-	cin >> appleprice; //사과가격을 입력받음
-	cout << "banana의 가격은 얼마입니까?";
-	cin >> bananaprice;
-	cout << "orange의 가격은 얼마입니까?";
-	cin >> orangeprice;
-	
-	cout << "apple은 몇개 있습니까?";  //사과의 개수를 입력받음
-	cin >> apple;
-	cout << "banana은 몇개 있습니까?";
-	cin >> banana;
-	cout << "orange은 몇개 있습니까?";
-	cin >> orange;
+	while (1) // 0을 입력하기 전까지 무한 반복
+	{
+		cout << "좌석을 예약하시겠습니까? (1 또는 0) ";
+		cin >> sel; //좌석 예약할건지 답 받음
 
-	cout << "총" << (appleprice * apple) + (bananaprice * banana) + (orangeprice * orange) - 500 << "원 입니다." << endl;
-	
+		if (sel == 1)
+		{
+			cout << endl << "현재의 좌석은 다음과 같습니다." << endl;
+			cout << "-----------------------------------" << endl;
+			cout << "1 2 3 4 5 6 7 8 9 10" << endl;
+			cout << "-----------------------------------" << endl;
+			for (a = 0; a < 3; a++) // 배열 행 출력(반복문)
+			{ 
+				for (b = 0; b < 10; b++) // 배열 열 출력(반복문)
+				{ 
+					cout << seat[a][b] << " ";
+				}
+				cout << endl; // endl은 반복되지 않게 빠져나와서 작성
+			}
+			cout << "몇 일, 몇 번째 좌석을 예약하시겠습니까? ";
+			cin >> a >> b;
+			if (seat[a - 1][b - 1] == 0) // 선택한 자리가 0일때 => 선택,
+			{// 배열의 인덱스는 항상 0부터 시작 => ((입력 값) -1 )값이 대입
+				cout << "\n예약되었습니다." << endl;
+				cout << "-------------------------------" << endl;
+				cout << "1 2 3 4 5 6 7 8 9 10" << endl;
+				cout << "-------------------------------" << endl;
+				seat[a - 1][b - 1] = 1; // 선택한 자리 => 1로 바꿈
+				for (a = 0; a < 3; a++)
+				{
+					for (b = 0; b < 10; b++)
+					{
+						cout << seat[a][b] << " ";
+					}
+					cout << endl;
+				}
+
+			}
+			else // 사용자가 1인 좌석을 선택했을 때
+			{
+				cout << "이미 예약된 자리입니다." << endl;
+			}
+		}
+
+		else if (sel == 0) // 좌석 예약 종료
+		{
+			cout << "좌석 예약 종료" << endl;
+			break;
+
+		}
+
+		else // 1 or 0이 아닌 다른 숫자 입력
+		{
+			cout << "1번 또는 0번만 입력하세요." << endl;
+		}
+
+	}
+
 	return 0;
 }
